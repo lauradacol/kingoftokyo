@@ -1,0 +1,76 @@
+<html>
+<head>
+	<title>King of Tokyo</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="style.css">
+	<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+</head>
+  
+<body>
+	<header>
+		King of Tokyo		
+	</header>
+	
+	<section id="left">
+		<p class="nameMonster">Meka Dragon</p>
+		<div class="players">			
+			<img src="images/mekadragon.jpg" class="monsters" alt="Meka Dragon" id="mekadragon">
+			<p class="infoMonster life">♥ 10</p>
+			<p class="infoMonster points">★ 0</p>
+			<p class="infoMonster money">⚡ 0</p>			
+		</div>
+		<br>
+
+		<p class="nameMonster">Cyber Bunny</p>
+		<div class="players">
+			<img src="images/cyberbunny.jpg" class="monsters" alt="Cyber Bunny" id="cyberbunny">
+			<p class="infoMonster life">♥ 10</p>
+			<p class="infoMonster points">★ 0</p>
+			<p class="infoMonster money">⚡ 0</p>		
+		</div>
+			
+	</section>
+	
+	<section class="board" id="board">
+		<p class="dices" id="d1" onclick="chooseDice('1')"> </p>
+		<p class="dices" id="d2" onclick="chooseDice(2)"> </p>    
+		<p class="dices" id="d3" onclick="chooseDice(3)"> </p>    
+		<p class="dices" id="d4" onclick="chooseDice(4)"> </p>  
+		<p class="dices" id="d5" onclick="chooseDice(5)"> </p>    
+		<p class="dices" id="d6" onclick="chooseDice(6)"> </p>  			
+		<br>				
+		<button id="button" onclick="rollDices()">Roll Dice</button>
+		<br>
+		
+		<img src="images/tokyomap.jpg" alt="Tokyo map" id="tokyomap">
+		
+	</section>
+	
+	<section id="right">
+		<p class="nameMonster">The King</p>
+		<div class="players">
+			<img src="images/theking.jpg" class="monsters" alt="The King" id="theking">
+			<p class="infoMonster life">♥ 10</p>
+			<p class="infoMonster points">★ 0</p>
+			<p class="infoMonster money">⚡ 0</p>		
+		</div>
+		<br>
+
+		<p class="nameMonster">Giga Zaur</p>
+		<div class="players">
+			<img src="images/gigazaur.jpg" class="monsters" alt="Giga Zaur" id="gigazaur">
+			<p class="infoMonster life">♥ 10</p>
+			<p class="infoMonster points">★ 0</p>
+			<p class="infoMonster money">⚡ 0</p>		
+		</div>
+		
+	</section>	
+	
+	
+
+  
+  
+  <script src="kot.js"></script>
+ 
+  </body>
+</html>
