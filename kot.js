@@ -10,17 +10,17 @@ class dice {
 					
 		if(result==4){
 			result = "<img src=\"images/fist.png\" width=\"50%\">";	
-			this.result = 0;				
+			this.result = 4;				
 		}
 
 		else if(result==5){					
 			result = "⚡";	
-			this.result = 0;		
+			this.result = 5;		
 		}
 
 		else if(result==6){
 			result = "♥";	
-			this.result = 0;	
+			this.result = 6;	
 		}
 		
 		else{
@@ -57,13 +57,15 @@ class player{
 		}*/
 	}
 
+/*****creating a dice array*****************************/
 var dices = new Array();
-
 var i;
 for(i=0; i<6; i++){	
 	dices.push(new dice(i+1));
 }
+/*******************************************************/
 
+/*****playing functions*********************************/
 function rollDices(){	
 	var i;
 	for(i=0; i<6; i++){
@@ -72,7 +74,10 @@ function rollDices(){
 		}	
 	}
 	
-	/*console.log(countPoints(dices));*/
+	/**for tests*/
+	/*console.log(getResults());*/
+	/*console.log(countPoints());*/
+	
 }
 
 function chooseDice(id){
@@ -90,38 +95,67 @@ function chooseDice(id){
 		document.getElementById("p"+id).style.display = "none";
 	}
 }
+/*******************************************************/
 
-function countPoints(dices){
-	var one = 0;
-	var two = 0;
-	var tree = 0;
-	var points = 0;
-	var i = 0;
-	
+/******end round functions******************************/
+function getResults(){
+	var results = {
+		one : 0,
+		two : 0,
+		tree : 0,
+		hand : 0,
+		money : 0,
+		life : 0
+	}
+
 	for(i=0; i<6; i++){
 		if(dices[i].result == 1){
-			one++;
+			results.one++;
 		}
 		else if(dices[i].result == 2){
-			two++;
+			results.two++;
 		}
 		else if(dices[i].result == 3){
-			tree++;
-		}		
+			results.tree++;
+		}
+		else if(dices[i].result == 4){
+			results.hand++;
+		}
+		else if(dices[i].result == 5){
+			results.money++;
+		}
+		else if(dices[i].result == 6){
+			results.life++;
+		}						
 	}
 	
-	if(one>=3){
-		points+= one-2;
+	return results;	
+}
+
+function countPoints(){
+	var points = 0;
+	
+	var results = getResults();
+	
+	if(results.one>=3){
+		points+= results.one-2;
 	}
-	if(two>=3){
-		points+= two-1;
+	if(results.two>=3){
+		points+= results.two-1;
 	}
-	if(tree>=3){
-		points+= tree;
+	if(results.tree>=3){
+		points+= results.tree;
 	}
+	
+	results.one = 0;
+	results.two = 0;
+	results.tree = 0;
 	
 	return points;
 }
+/*******************************************************/
+
+
 
 /*Create Monsters*/
 var mekaDragon = new player("Meka Dragon", 10, 0, 0, 0);
