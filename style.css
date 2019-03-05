@@ -73,6 +73,16 @@ button{
 	/*descobrir como centralizar verticalmente*/
 	vertical-align: middle;
 	cursor: pointer;
+	position: relative;
+}
+
+#p1, #p2, #p3, #p4, #p5, #p6{
+	position: absolute;
+	bottom: 0;
+	right: 0;	
+	display: none;
+	max-width: 30%;
+	height: auto;
 }
 
 #tokyomap{
