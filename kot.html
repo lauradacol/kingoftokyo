@@ -33,36 +33,36 @@
 	
 	<section class="board" id="board">
 		<div class="dices">
-			<p class="dices" id="d1" onclick="chooseDice('1')"> </p>
+			<p class="dices" id="d1" onclick="board.dices[0].chooseDice('1')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p1">
 		</div>
 
 		<div class="dices">
-			<p class="dices" id="d2" onclick="chooseDice('2')"> </p>
+			<p class="dices" id="d2" onclick="board.dices[1].chooseDice('2')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p2">
 		</div>
 		
 		<div class="dices">
-			<p class="dices" id="d3" onclick="chooseDice('3')"> </p>
+			<p class="dices" id="d3" onclick="board.dices[2].chooseDice('3')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p3">
 		</div>				
 		
 		<div class="dices">
-			<p class="dices" id="d4" onclick="chooseDice('4')"> </p>
+			<p class="dices" id="d4" onclick="board.dices[3].chooseDice('4')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p4">
 		</div>
 		
 		<div class="dices">
-			<p class="dices" id="d5" onclick="chooseDice('5')"> </p>
+			<p class="dices" id="d5" onclick="board.dices[4].chooseDice('5')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p5">
 		</div>
 
 		<div class="dices">
-			<p class="dices" id="d6" onclick="chooseDice('6')"> </p>
+			<p class="dices" id="d6" onclick="board.dices[5].chooseDice('6')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p6">
 		</div>				
 		<br>				
-		<button id="button" onclick="rollDices()">Roll Dice</button>
+		<button id="button" onclick="board.rollDices()">Roll Dice</button>
 		<br>
 		
 		<img src="images/tokyomap.jpg" alt="Tokyo map" id="tokyomap">

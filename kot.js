@@ -1,5 +1,5 @@
 class dice {
-    constructor(name, picked, result) {     
+    constructor(name) {     
 		this.name = name;       
         this.picked = 0; 
         this.result = 0;
@@ -31,6 +31,22 @@ class dice {
 				
 	} 
 	
+	chooseDice(id){
+		if(this.picked==0){
+			this.picked = 1;
+			document.getElementById("d"+id).style.background = "gray";
+			document.getElementById("d"+id).style.border = "2px solid black";	
+			document.getElementById("p"+id).style.display = "block";
+	}
+	
+		else if(this.picked==1){
+			this.picked=0;
+			document.getElementById("d"+id).style.background = "black";
+			document.getElementById("d"+id).style.border = "2px solid #00cc00";					
+			document.getElementById("p"+id).style.display = "none";
+		}
+	}
+	
 }
 
 class player{
@@ -41,126 +57,114 @@ class player{
 		this.money = money;
 		this.tokyo = tokyo;
 	}
-
-/*
-	writePlayer(){
-		document.getElementById("name").innerHTML = this.name;
-		document.getElementById("life").innerHTML = this.life;
-		document.getElementById("points").innerHTML = this.points;
-		document.getElementById("money").innerHTML = this.money;
-		document.getElementById("tokyo").innerHTML = this.tokyo;
-	}
-		
-	getValue(){
-		this.life+=1;
-		this.writePlayer();
-		}*/
-	}
-
-/*****creating a dice array*****************************/
-var dices = new Array();
-var i;
-for(i=0; i<6; i++){	
-	dices.push(new dice(i+1));
 }
-/*******************************************************/
 
-/*****playing functions*********************************/
-function rollDices(){	
+class gameBoard{
+	constructor(){		
+		this.mekaDragon = new player("Meka Dragon", 10, 0, 0, 0);
+		this.cyberBunny = new player("Cyber Bunny", 10, 0, 0, 0);
+		this.theKing = new player("The King", 10, 0, 0, 0);
+		this.gigaZaur = new player("Giga Zaur", 10, 0, 0, 0);		
+		this.dices = new Array();
+		var i;
+		for(i=0; i<6; i++){	
+			this.dices.push(new dice(i+1));
+		}
+	}
+	
+	rollDices(){	
 	var i;
 	for(i=0; i<6; i++){
-		if(dices[i].picked==0){
-			dices[i].roll(i+1);				 		
+		if(this.dices[i].picked==0){
+			this.dices[i].roll(i+1);				 		
 		}	
 	}
 	
 	/**for tests*/
-	/*console.log(getResults());*/
-	/*console.log(countPoints());*/
-	
-}
-
-function chooseDice(id){
-	if(dices[id-1].picked==0){
-		dices[id-1].picked = 1;
-		document.getElementById("d"+id).style.background = "gray";
-		document.getElementById("d"+id).style.border = "2px solid black";	
-		document.getElementById("p"+id).style.display = "block";
-	}
-	
-	else if(dices[id-1].picked==1){
-		dices[id-1].picked=0;
-		document.getElementById("d"+id).style.background = "black";
-		document.getElementById("d"+id).style.border = "2px solid #00cc00";					
-		document.getElementById("p"+id).style.display = "none";
+	/*
+	results.getResults(this.dices);
+	results.countPoints(this.dices);	
+	console.log(results);
+	console.log(results.points);
+	results.clearResults();
+	console.log(countPoints());
+	*/	
 	}
 }
-/*******************************************************/
 
-/******end round functions******************************/
-function getResults(){
-	var results = {
-		one : 0,
-		two : 0,
-		tree : 0,
-		hand : 0,
-		money : 0,
-		life : 0
+class roundResults{
+	constructor(){
+		this.one = 0;
+		this.two = 0;
+		this.tree = 0;
+		this.hand = 0;
+		this.money = 0;
+		this.life = 0;
+		this.points = 0;
 	}
 
-	for(i=0; i<6; i++){
-		if(dices[i].result == 1){
-			results.one++;
+	getResults(dices){
+		for(var i=0; i<6; i++){
+			if(dices[i].result == 1){
+				this.one++;
+			}
+			else if(dices[i].result == 2){
+				this.two++;
+			}
+			else if(dices[i].result == 3){
+				this.tree++;
+			}
+			else if(dices[i].result == 4){
+				this.hand++;
+			}
+			else if(dices[i].result == 5){
+				this.money++;
+			}
+			else if(dices[i].result == 6){
+				this.life++;
+			}						
 		}
-		else if(dices[i].result == 2){
-			results.two++;
-		}
-		else if(dices[i].result == 3){
-			results.tree++;
-		}
-		else if(dices[i].result == 4){
-			results.hand++;
-		}
-		else if(dices[i].result == 5){
-			results.money++;
-		}
-		else if(dices[i].result == 6){
-			results.life++;
-		}						
-	}
-	
-	return results;	
-}
+	}		
 
-function countPoints(){
-	var points = 0;
-	
-	var results = getResults();
-	
-	if(results.one>=3){
-		points+= results.one-2;
-	}
-	if(results.two>=3){
-		points+= results.two-1;
-	}
-	if(results.tree>=3){
-		points+= results.tree;
-	}
-	
-	results.one = 0;
-	results.two = 0;
-	results.tree = 0;
-	
-	return points;
+	countPoints(){	
+		if(results.one>=3){
+			this.points+= results.one-2;
+		}
+		if(results.two>=3){
+			this.points+= results.two-1;
+		}
+		if(results.tree>=3){
+			this.points+= results.tree;
+		}		
+	}	
+		
+	clearResults(){
+		this.one = 0;
+		this.two = 0;
+		this.tree = 0;
+		this.hand = 0;
+		this.money = 0;
+		this.life = 0;
+		this.points = 0;
+	}		
 }
 /*******************************************************/
 
+class gameRound(){
+	constructor(player, ){
+	
+	}
+}
 
 
-/*Create Monsters*/
-var mekaDragon = new player("Meka Dragon", 10, 0, 0, 0);
-var cyberBunny = new player("Cyber Bunny", 10, 0, 0, 0);
-var theKing = new player("The King", 10, 0, 0, 0);
-var gigaZaur = new player("Giga Zaur", 10, 0, 0, 0);
+/*Creating a board*/
+var board = new gameBoard();
+
+/*Creating a result object*/
+var results = new roundResults();
+
+
+
+
 
 
