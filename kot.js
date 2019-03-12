@@ -50,8 +50,9 @@ class dice {
 }
 
 class player{
-	constructor(name, life, points, money, tokyo){
+	constructor(name, id, life, points, money, tokyo){
 		this.name = name;
+		this.id = id;
 		this.life = life;
 		this.points = points;
 		this.money = money;
@@ -60,17 +61,80 @@ class player{
 }
 
 class gameBoard{
-	constructor(){		
-		this.mekaDragon = new player("Meka Dragon", 10, 0, 0, 0);
-		this.cyberBunny = new player("Cyber Bunny", 10, 0, 0, 0);
-		this.theKing = new player("The King", 10, 0, 0, 0);
-		this.gigaZaur = new player("Giga Zaur", 10, 0, 0, 0);		
+	constructor(){
+		this.playersArray = new Array();
+		this.playersArray.push(new player("Meka Dragon", "mekaDragon", 10, 0, 0, 0));
+		this.playersArray.push(new player("Cyber Bunny", "cyberBunny", 10, 0, 0, 0));
+		this.playersArray.push(new player("The King", "theKing", 10, 0, 0, 0));		
+		this.playersArray.push(new player("Giga Zaur", "gigaZaur", 10, 0, 0, 0));	
+	
 		this.dices = new Array();
+		this.countRound = 0;
 		var i;
 		for(i=0; i<6; i++){	
 			this.dices.push(new dice(i+1));
 		}
 	}
+
+	maxPoint(){
+		var i;
+		var maxPoint = this.playersArray[0].points;
+		
+		for(i=1; i<4; i++){
+			if(this.playersArray[i].points > maxPoint){
+				maxPoint = this.playersArray[i].points;
+			}			
+		}
+		return maxPoint;
+	}
+
+	gamePlay(){
+		document.getElementById("buttonStart").disabled = true;
+		document.getElementById("buttonStart").style.background = "gray";		
+		
+		
+		while(this.maxPoint()<5){
+			var i;
+			for(i=0; i<4; i++){
+				roundPlay(this.playersArray[0]);
+			}		
+		}
+		
+	}
+		
+	dicesPlay(){
+		console.log(this.countRound);
+		
+		if(this.countRound<3){
+			this.rollDices();
+			this.countRound++;
+		}
+		
+		else{
+			document.getElementById("buttonRoll").disabled = true;
+			document.getElementById("buttonRoll").style.background = "gray";							
+		}		
+
+	}
+	
+	endTurn(){
+		results.getResults(this.dices);
+		results.countPoints();
+		
+		thePlayer.life+=results.life;
+		thePlayer.points+=results.points;
+		thePlayer.money+=results.money;	
+	
+		document.getElementById(thePlayer.id+"Life").innerHTML = "♥ " + thePlayer.life;
+		document.getElementById(thePlayer.id+"Points").innerHTML = "★ " + thePlayer.points;
+		document.getElementById(thePlayer.id+"Money").innerHTML = "⚡ " + thePlayer.money;
+
+		this.maxPoint();
+		
+	}
+	
+	
+
 	
 	rollDices(){	
 	var i;
@@ -79,6 +143,8 @@ class gameBoard{
 			this.dices[i].roll(i+1);				 		
 		}	
 	}
+	
+	/*console.log(this.countRound);*/
 	
 	/**for tests*/
 	/*
@@ -150,9 +216,9 @@ class roundResults{
 }
 /*******************************************************/
 
-class gameRound(){
-	constructor(player, ){
-	
+class gameRound{
+	constructor(player){
+		this.player = player;
 	}
 }
 

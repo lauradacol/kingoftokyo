@@ -9,15 +9,16 @@
 <body>
 	<header>
 		King of Tokyo		
+		<button class="button" id="buttonStart" onclick="board.gamePlay()">START</button>
 	</header>
 	
 	<section id="left">
 		<p class="nameMonster">Meka Dragon</p>
 		<div class="players">			
 			<img src="images/mekadragon.jpg" class="monsters" alt="Meka Dragon" id="mekadragon">
-			<p class="infoMonster life">♥ 10</p>
-			<p class="infoMonster points">★ 0</p>
-			<p class="infoMonster money">⚡ 0</p>			
+			<p class="infoMonster life" id="mekaDragonLife">♥ 10</p>
+			<p class="infoMonster points" id="mekaDragonPoints">★ 0</p>
+			<p class="infoMonster money" id="mekaDragonMoney">⚡ 0</p>			
 		</div>
 		<br>
 
@@ -32,6 +33,7 @@
 	</section>
 	
 	<section class="board" id="board">
+		
 		<div class="dices">
 			<p class="dices" id="d1" onclick="board.dices[0].chooseDice('1')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p1">
@@ -62,9 +64,10 @@
 			<img src="images/padlock.png" alt="Padlock" id="p6">
 		</div>				
 		<br>				
-		<button id="button" onclick="board.rollDices()">Roll Dice</button>
+		<button class="button" id="buttonRoll" onclick="board.roundPlay()">Roll Dice</button>
 		<br>
-		
+		<button class="button" id="buttonResults" onclick="board.endTurn(board.playersArray[0])">End Turn</button>
+
 		<img src="images/tokyomap.jpg" alt="Tokyo map" id="tokyomap">
 		
 	</section>
