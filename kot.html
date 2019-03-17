@@ -9,13 +9,13 @@
 <body>
 	<header>
 		King of Tokyo		
-		<button class="button" id="buttonStart" onclick="board.gamePlay()">START</button>
+		<button class="button" id="buttonStart" onclick="gamePlay()">START</button>
 	</header>
 	
 	<section id="left">
 		<p class="nameMonster">Meka Dragon</p>
 		<div class="players">			
-			<img src="images/mekadragon.jpg" class="monsters" alt="Meka Dragon" id="mekadragon">
+			<img src="images/mekadragon.jpg" class="monsters" alt="Meka Dragon" id="mekaDragon">
 			<p class="infoMonster life" id="mekaDragonLife">♥ 10</p>
 			<p class="infoMonster points" id="mekaDragonPoints">★ 0</p>
 			<p class="infoMonster money" id="mekaDragonMoney">⚡ 0</p>			
@@ -24,10 +24,10 @@
 
 		<p class="nameMonster">Cyber Bunny</p>
 		<div class="players">
-			<img src="images/cyberbunny.jpg" class="monsters" alt="Cyber Bunny" id="cyberbunny">
-			<p class="infoMonster life">♥ 10</p>
-			<p class="infoMonster points">★ 0</p>
-			<p class="infoMonster money">⚡ 0</p>		
+			<img src="images/cyberbunny.jpg" class="monsters" alt="Cyber Bunny" id="cyberBunny">
+			<p class="infoMonster life" id="cyberBunnyLife">♥ 10</p>
+			<p class="infoMonster points" id="cyberBunnyPoints">★ 0</p>
+			<p class="infoMonster money" id="cyberBunnyMoney">⚡ 0</p>		
 		</div>
 			
 	</section>
@@ -35,39 +35,41 @@
 	<section class="board" id="board">
 		
 		<div class="dices">
-			<p class="dices" id="d1" onclick="board.dices[0].chooseDice('1')"> </p>
+			<p class="dices" id="d1" onclick="round.dices[0].chooseDice('1')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p1">
 		</div>
 
 		<div class="dices">
-			<p class="dices" id="d2" onclick="board.dices[1].chooseDice('2')"> </p>
+			<p class="dices" id="d2" onclick="round.dices[1].chooseDice('2')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p2">
 		</div>
 		
 		<div class="dices">
-			<p class="dices" id="d3" onclick="board.dices[2].chooseDice('3')"> </p>
+			<p class="dices" id="d3" onclick="round.dices[2].chooseDice('3')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p3">
 		</div>				
 		
 		<div class="dices">
-			<p class="dices" id="d4" onclick="board.dices[3].chooseDice('4')"> </p>
+			<p class="dices" id="d4" onclick="round.dices[3].chooseDice('4')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p4">
 		</div>
 		
 		<div class="dices">
-			<p class="dices" id="d5" onclick="board.dices[4].chooseDice('5')"> </p>
+			<p class="dices" id="d5" onclick="round.dices[4].chooseDice('5')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p5">
 		</div>
 
 		<div class="dices">
-			<p class="dices" id="d6" onclick="board.dices[5].chooseDice('6')"> </p>
+			<p class="dices" id="d6" onclick="round.dices[5].chooseDice('6')"> </p>
 			<img src="images/padlock.png" alt="Padlock" id="p6">
-		</div>				
-		<br>				
-		<button class="button" id="buttonRoll" onclick="board.roundPlay()">Roll Dice</button>
-		<br>
-		<button class="button" id="buttonResults" onclick="board.endTurn(board.playersArray[0])">End Turn</button>
+		</div>								
+		<button class="button" id="buttonRoll" onclick="round.dicesPlay()" disabled style="background:gray;">Roll Dice</button>	
+		<button class="button" id="buttonGet" onclick="round.gainResults()" disabled style="background:gray;">Get Results</button>
+		<button class="button" id="buttonTokyo" onclick="round.doTokyo()" disabled style="background:gray;">Tokyo</button>
+		<button class="button" id="buttonEnd" onclick="round.endTurn()" disabled style="background:gray;">End Turn</button>
 
+
+		<p class="nameMonster" id="tokyoMonster"></p>
 		<img src="images/tokyomap.jpg" alt="Tokyo map" id="tokyomap">
 		
 	</section>
@@ -75,19 +77,19 @@
 	<section id="right">
 		<p class="nameMonster">The King</p>
 		<div class="players">
-			<img src="images/theking.jpg" class="monsters" alt="The King" id="theking">
-			<p class="infoMonster life">♥ 10</p>
-			<p class="infoMonster points">★ 0</p>
-			<p class="infoMonster money">⚡ 0</p>		
+			<img src="images/theking.jpg" class="monsters" alt="The King" id="theKing">
+			<p class="infoMonster life" id="theKingLife">♥ 10</p>
+			<p class="infoMonster points" id="theKingPoints">★ 0</p>
+			<p class="infoMonster money" id="theKingMoney">⚡ 0</p>		
 		</div>
 		<br>
 
 		<p class="nameMonster">Giga Zaur</p>
 		<div class="players">
-			<img src="images/gigazaur.jpg" class="monsters" alt="Giga Zaur" id="gigazaur">
-			<p class="infoMonster life">♥ 10</p>
-			<p class="infoMonster points">★ 0</p>
-			<p class="infoMonster money">⚡ 0</p>		
+			<img src="images/gigazaur.jpg" class="monsters" alt="Giga Zaur" id="gigaZaur">
+			<p class="infoMonster life" id="gigaZaurLife">♥ 10</p>
+			<p class="infoMonster points" id="gigaZaurPoints">★ 0</p>
+			<p class="infoMonster money" id="gigaZaurMoney">⚡ 0</p>				
 		</div>
 		
 	</section>	

@@ -47,6 +47,12 @@ class dice {
 		}
 	}
 	
+	diceInit(id){
+		this.picked=1;
+		this.chooseDice(id);
+		document.getElementById("d"+id).innerHTML = "";
+	}
+	
 }
 
 class player{
@@ -57,104 +63,6 @@ class player{
 		this.points = points;
 		this.money = money;
 		this.tokyo = tokyo;
-	}
-}
-
-class gameBoard{
-	constructor(){
-		this.playersArray = new Array();
-		this.playersArray.push(new player("Meka Dragon", "mekaDragon", 10, 0, 0, 0));
-		this.playersArray.push(new player("Cyber Bunny", "cyberBunny", 10, 0, 0, 0));
-		this.playersArray.push(new player("The King", "theKing", 10, 0, 0, 0));		
-		this.playersArray.push(new player("Giga Zaur", "gigaZaur", 10, 0, 0, 0));	
-	
-		this.dices = new Array();
-		this.countRound = 0;
-		var i;
-		for(i=0; i<6; i++){	
-			this.dices.push(new dice(i+1));
-		}
-	}
-
-	maxPoint(){
-		var i;
-		var maxPoint = this.playersArray[0].points;
-		
-		for(i=1; i<4; i++){
-			if(this.playersArray[i].points > maxPoint){
-				maxPoint = this.playersArray[i].points;
-			}			
-		}
-		return maxPoint;
-	}
-
-	gamePlay(){
-		document.getElementById("buttonStart").disabled = true;
-		document.getElementById("buttonStart").style.background = "gray";		
-		
-		
-		while(this.maxPoint()<5){
-			var i;
-			for(i=0; i<4; i++){
-				roundPlay(this.playersArray[0]);
-			}		
-		}
-		
-	}
-		
-	dicesPlay(){
-		console.log(this.countRound);
-		
-		if(this.countRound<3){
-			this.rollDices();
-			this.countRound++;
-		}
-		
-		else{
-			document.getElementById("buttonRoll").disabled = true;
-			document.getElementById("buttonRoll").style.background = "gray";							
-		}		
-
-	}
-	
-	endTurn(){
-		results.getResults(this.dices);
-		results.countPoints();
-		
-		thePlayer.life+=results.life;
-		thePlayer.points+=results.points;
-		thePlayer.money+=results.money;	
-	
-		document.getElementById(thePlayer.id+"Life").innerHTML = "♥ " + thePlayer.life;
-		document.getElementById(thePlayer.id+"Points").innerHTML = "★ " + thePlayer.points;
-		document.getElementById(thePlayer.id+"Money").innerHTML = "⚡ " + thePlayer.money;
-
-		this.maxPoint();
-		
-	}
-	
-	
-
-	
-	rollDices(){	
-	var i;
-	for(i=0; i<6; i++){
-		if(this.dices[i].picked==0){
-			this.dices[i].roll(i+1);				 		
-		}	
-	}
-	
-	/*console.log(this.countRound);*/
-	
-	/**for tests*/
-	/*
-	results.getResults(this.dices);
-	results.countPoints(this.dices);	
-	console.log(results);
-	console.log(results.points);
-	results.clearResults();
-	console.log(countPoints());
-	*/	
 	}
 }
 
@@ -217,19 +125,191 @@ class roundResults{
 /*******************************************************/
 
 class gameRound{
-	constructor(player){
+	constructor(){
+		this.playersArray = new Array();
+		this.playersArray.push(new player("Meka Dragon", "mekaDragon", 10, 0, 0, 0));
+		this.playersArray.push(new player("Cyber Bunny", "cyberBunny", 10, 0, 0, 0));
+		this.playersArray.push(new player("The King", "theKing", 10, 0, 0, 0));		
+		this.playersArray.push(new player("Giga Zaur", "gigaZaur", 10, 0, 0, 0));
+		
 		this.player = player;
+		this.dices = new Array();
+		this.countRound = 0;
+		this.tokyo = null;
 	}
+
+	maxPoint(){
+		var i;
+		var maxPoint = this.playersArray[0].points;
+		
+		for(i=1; i<4; i++){
+			if(this.playersArray[i].points > maxPoint){
+				maxPoint = this.playersArray[i].points;
+			}			
+		}
+		return maxPoint;
+	}	
+	
+	createDices(){
+		this.dices = new Array();
+		this.countRound = 0;
+		var i;
+		for(i=0; i<6; i++){	
+			this.dices.push(new dice(i+1));
+			this.dices[i].diceInit(i+1);
+		}
+			
+	}	
+	
+	rollDices(){	
+		var i;
+		for(i=0; i<6; i++){
+			if(this.dices[i].picked==0){
+				this.dices[i].roll(i+1);				 		
+			}	
+		}
+	}	
+	
+ 	dicesActivate(){
+		document.getElementById("buttonRoll").disabled = false;
+		document.getElementById("buttonRoll").style.background = "#00cc00";
+		document.getElementById("buttonGet").disabled = false;		
+		document.getElementById("buttonGet").style.background = "#00cc00";			
+		document.getElementById("buttonEnd").disabled = false;		
+		document.getElementById("buttonEnd").style.background = "#00cc00";			
+	}
+ 	
+	dicesPlay(){
+		/*console.log(this.countRound);*/
+		
+		if(this.countRound<3){
+			this.rollDices();
+			this.countRound++;
+		}
+		
+		else{
+			document.getElementById("buttonRoll").disabled = true;
+			document.getElementById("buttonRoll").style.background = "gray";							
+		}		
+
+	}
+	
+	playerBorder(player1, player2){
+		document.getElementById(player1.id).style.border = "none";
+		document.getElementById(player2.id).style.border = "5px solid red";	
+	}
+	
+	doTokyo(){
+		results.getResults(this.dices);
+		if(document.getElementById("buttonTokyo").innerHTML=="Go to Tokyo?"){
+			this.tokyo = this.player;
+			document.getElementById("tokyoMonster").innerHTML = this.player.name;
+		}	
+		
+		if(document.getElementById("buttonTokyo").innerHTML=="Beat the Enemies?"){
+			var i;
+			for(i=0;i<4;i++){
+				if(this.playersArray[i]!=this.player){
+					this.playersArray[i].life-=results.hand;
+				}
+			}
+		}
+		
+		if(document.getElementById("buttonTokyo").innerHTML=="Beat the King?"){
+			console.log(results.hand);
+			console.log(this.tokyo.life);
+			this.tokyo.life-=results.hand;
+			console.log(this.tokyo.life);
+		}
+			
+	}	
+	
+	handResults(){	
+		/*if Tokyo is empty, the player can choose go to Tokyo*/
+		if(this.tokyo==null){
+			document.getElementById("buttonTokyo").disabled = false;		
+			document.getElementById("buttonTokyo").style.background = "#00cc00";
+			document.getElementById("buttonTokyo").innerHTML = "Go to Tokyo?";	
+		}		
+			
+		/*If the player is in Tokyo*/
+		else if(this.tokyo==this.player){
+			document.getElementById("buttonTokyo").disabled = false;		
+			document.getElementById("buttonTokyo").style.background = "#00cc00";
+			document.getElementById("buttonTokyo").innerHTML = "Beat the Enemies?";					
+		}
+		
+		/*If Tokyo is ocupied by another player*/
+		else if(this.tokyo!=this.player){
+			document.getElementById("buttonTokyo").disabled = false;		
+			document.getElementById("buttonTokyo").style.background = "#00cc00";
+			document.getElementById("buttonTokyo").innerHTML = "Beat the King?";					
+		}
+	}	
+	
+	gainResults(){		
+		/*Get the dices's results*/		
+		results.getResults(this.dices);
+		
+		/*Calculate the points*/
+		results.countPoints();
+		
+		/*Tokyo*/
+		if(results.hand!=0){
+			this.handResults();	
+		}
+		
+		/*Trasnfer the results to the player*/
+		this.player.life+=results.life;
+		this.player.points+=results.points;
+		this.player.money+=results.money;	
+	
+		/*Update de players scores on the html*/
+		document.getElementById(this.player.id+"Life").innerHTML = "♥ " + this.player.life;
+		document.getElementById(this.player.id+"Points").innerHTML = "★ " + this.player.points;
+		document.getElementById(this.player.id+"Money").innerHTML = "⚡ " + this.player.money;		
+		}
+		
+	endTurn(){		
+		/*Change player border*/
+		this.playerBorder(this.playersArray[playerIndex], this.playersArray[(playerIndex+1)%4]);
+		
+		/*Change player index to get the next player*/
+		playerIndex = (playerIndex+1)%4;
+						
+		/*Get the next player*/
+		this.player = round.playersArray[playerIndex];
+		
+		/*Clear the results*/
+		results.clearResults();
+		
+		/*Reativate the dices*/
+		this.dicesActivate();
+		
+		/*Create new dices*/
+		this.createDices();					
+	}	
+	
 }
-
-
-/*Creating a board*/
-var board = new gameBoard();
 
 /*Creating a result object*/
 var results = new roundResults();
 
+/*Creating a gameRound object*/	
+var round = new gameRound();
+var playerIndex = 0;
+round.player = round.playersArray[playerIndex];		
 
+function gamePlay(){	
+		round.playerBorder(round.playersArray[3], round.playersArray[0]);
+
+		document.getElementById("buttonStart").disabled = true;
+		document.getElementById("buttonStart").style.background = "gray";		
+
+		round.dicesActivate();
+		round.createDices();
+		}		
+	
 
 
 
