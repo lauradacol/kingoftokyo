@@ -200,28 +200,31 @@ class gameRound{
 	}
 	
 	doTokyo(){
-		results.getResults(this.dices);
 		if(document.getElementById("buttonTokyo").innerHTML=="Go to Tokyo?"){
 			this.tokyo = this.player;
 			document.getElementById("tokyoMonster").innerHTML = this.player.name;
+			document.getElementById("tokyoMonsterImg").src = "images/" + this.player.id + ".jpg";
+			document.getElementById("tokyoMonsterImg").alt = this.player.name;
+			
+			
+			
 		}	
 		
 		if(document.getElementById("buttonTokyo").innerHTML=="Beat the Enemies?"){
 			var i;
 			for(i=0;i<4;i++){
-				if(this.playersArray[i]!=this.player){
+				if(this.playersArray[i]!=this.player){					
 					this.playersArray[i].life-=results.hand;
+					document.getElementById(this.playersArray[i].id+"Life").innerHTML = "♥ " + this.playersArray[i].life;
 				}
 			}
 		}
 		
 		if(document.getElementById("buttonTokyo").innerHTML=="Beat the King?"){
-			console.log(results.hand);
-			console.log(this.tokyo.life);
+			console.log("beat " + results.hand);
 			this.tokyo.life-=results.hand;
-			console.log(this.tokyo.life);
-		}
-			
+			document.getElementById(this.tokyo.id+"Life").innerHTML = "♥ " + this.tokyo.life;
+		}			
 	}	
 	
 	handResults(){	
@@ -247,7 +250,7 @@ class gameRound{
 		}
 	}	
 	
-	gainResults(){		
+	gainResults(){							
 		/*Get the dices's results*/		
 		results.getResults(this.dices);
 		
@@ -282,6 +285,11 @@ class gameRound{
 		
 		/*Clear the results*/
 		results.clearResults();
+		
+		/*Tokyo Button*/
+		document.getElementById("buttonTokyo").innerHTML="Tokyo";
+		document.getElementById("buttonTokyo").disabled = true;
+		document.getElementById("buttonTokyo").style.background = "grey";
 		
 		/*Reativate the dices*/
 		this.dicesActivate();

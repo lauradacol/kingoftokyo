@@ -25,11 +25,9 @@ body{
 	font-size: 100%;
 }
 
-#left, #board, #right{	
+#left, .board, #right{	
 	float: left;
-	border: 1px solid #000;
 	padding: 15px;
-	height: 100%;
 	position: relative;
 }
 
@@ -37,75 +35,30 @@ body{
 	width: 24%;	
 }
 
-#player{
-	padding: 15px;
-}
-
-.button{
-  background-color:  #00cc00;
-  color: black;
-  border-radius: 6px;
-  border: none;
-  color: rgb(255, 255, 255);
-  padding: 10px;
-  text-transform: uppercase;
-  width: 200px;
-  cursor: pointer;
-  margin: 10px;
-  margin-bottom: 20px;
-  display: inline-block;
-
-}
-
-#buttonStart{
-	font-family: 'Luckiest Guy', cursive;
-	font-size: 50px;
-	position: absolute;
-	right: 100;
-	top: 5;
-	background: orange;
-	color: black;
-	border: 5px solid black;
-
-}
-
-#board{
+.board{
 	width: 46%;
-	border: 1px solid red;
 	text-align: center;
-}
-
-.dices{
-	height: 100px;
-	width: 100px;
-	display: inline-block;
-	border: 2px solid #00cc00;
-	border-radius: 10px;
-	background: black;
-	color: #00cc00;
-	text-align: center;
-	font-size:50px;
-	/*descobrir como centralizar verticalmente*/
-	vertical-align: middle;
-	cursor: pointer;
-	position: relative;
-}
-
-#p1, #p2, #p3, #p4, #p5, #p6{
-	position: absolute;
-	bottom: 0;
-	right: 0;	
-	display: none;
-	max-width: 30%;
-	height: auto;
+	background: orange;
 }
 
 #tokyomap{
 	width: 100%;
-	height: 80%;}
+	height: 80%;
+	position: relative;
+	z-index: 2;
+}
 
-.monsters{
-	width: 100%;
+.monsterOnTokyo{
+	width:40%;
+	height: 30%;
+	bottom: 160px;
+	right: 250px;
+	z-index: 1;
+	position: absolute;
+}
+
+#player{
+	padding: 15px;
 }
 
 .players{
@@ -157,15 +110,60 @@ body{
 	left: 10;
 }
 
+.monsters{
+	width: 100%;
+}
 
-/*
-#d1, #d2, #d3, #d4, #d5, #d6{
-  height: 25px;
-  width: 25px;
-  padding: 40px;
-  margin: 50px auto;
-  border: 1px solid gray;
-  border-radius: 10px;  
-  font-size:50px;
-  display: inline-block;
-}*/
+.button{
+	background-color:  #00cc00;
+	color: black;
+	border-radius: 6px;
+	border: none;
+	color: rgb(255, 255, 255);
+	padding: 10px;
+	text-transform: uppercase;
+	width: 200px;
+	cursor: pointer;
+	margin: 10px;
+	margin-bottom: 20px;
+	display: inline-block;
+
+}
+
+#buttonStart{
+	font-family: 'Luckiest Guy', cursive;
+	font-size: 50px;
+	position: absolute;
+	right: 100;
+	top: 5;
+	background: orange;
+	color: black;
+	border: 5px solid black;
+
+}
+
+.dices{
+	height: 100px;
+	width: 100px;
+	display: inline-block;
+	border: 2px solid #00cc00;
+	border-radius: 10px;
+	background: black;
+	color: #00cc00;
+	text-align: center;
+	font-size:50px;
+	/*descobrir como centralizar verticalmente*/
+	vertical-align: middle;
+	cursor: pointer;
+	position: relative;
+}
+
+#p1, #p2, #p3, #p4, #p5, #p6{
+	position: absolute;
+	bottom: 0;
+	right: 0;	
+	display: none;
+	max-width: 30%;
+	height: auto;
+}
+
