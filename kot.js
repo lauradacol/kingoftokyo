@@ -142,13 +142,30 @@ class gameRound{
 		var i;
 		var maxPoint = this.playersArray[0];
 		
-		for(i=1; i<4; i++){
+		for(i=0; i<4; i++){
 			if(this.playersArray[i].points > maxPoint.points){
 				maxPoint = this.playersArray[i];
 			}			
 		}
 		return maxPoint;
 	}	
+	
+	deathPlayer(){
+		var i;
+		for(i=0; i<4; i++){	
+			if(this.playersArray[i].life<=9){
+				document.getElementById(this.playersArray[i].id).style.filter = "grayscale(100%)";
+				document.getElementById(this.playersArray[i].id+"Life").style.background = "black";
+				document.getElementById(this.playersArray[i].id+"Points").style.background = "black";
+				document.getElementById(this.playersArray[i].id+"Money").style.background = "black";			
+				document.getElementById(this.playersArray[i].id+"Life").style.color = "red";
+				document.getElementById(this.playersArray[i].id+"Points").style.color = "grey";
+				document.getElementById(this.playersArray[i].id+"Money").style.color = "grey";
+				
+				/*FALTA TERMINAR A MORTE DO JOGADOR*/
+			}
+		}
+	}
 	
 	createDices(){
 		this.dices = new Array();
@@ -263,19 +280,19 @@ class gameRound{
 		}
 	}	
 	
-	/*	
-	heartResults(){		
-		if (this.player = this.tokyo){
+		
+	heartResults(){	
+		if (this.player == this.tokyo){
 			return false;
 		}		
 		
-		else if (this.player.life == 10){
+		else if (this.player.life >= 10){
 			return false;
 		}
 		else{
 			return true;
 		}
-	}*/
+	}
 	
 	gainResults(){				
 			
@@ -299,7 +316,10 @@ class gameRound{
 		}
 				
 		/*Trasnfer the results to the player*/
-		this.player.life+=results.life;
+		
+		if(this.heartResults()==true){
+			this.player.life+=results.life;		
+		}		
 		this.player.points+=results.points;
 		this.player.money+=results.money;	
 	
@@ -342,15 +362,17 @@ class gameRound{
 			document.getElementById(this.player.id+"Points").innerHTML = "★ " + this.player.points;
 			}		
 		}
-		
-		
-		
+						
 		/*Reativate the dices*/
 		this.dicesActivate();
 		
 		/*Create new dices*/
 		this.createDices();		
 		
+		/*The death of a player*/
+		this.deathPlayer();	
+				
+		/*The end of the game*/
 		if(this.maxPoint().points>=20){
 			document.getElementById("buttonRoll").disabled = true;
 			document.getElementById("buttonRoll").style.background = "gray";
