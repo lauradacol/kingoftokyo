@@ -140,11 +140,11 @@ class gameRound{
 
 	maxPoint(){
 		var i;
-		var maxPoint = this.playersArray[0].points;
+		var maxPoint = this.playersArray[0];
 		
 		for(i=1; i<4; i++){
-			if(this.playersArray[i].points > maxPoint){
-				maxPoint = this.playersArray[i].points;
+			if(this.playersArray[i].points > maxPoint.points){
+				maxPoint = this.playersArray[i];
 			}			
 		}
 		return maxPoint;
@@ -175,22 +175,22 @@ class gameRound{
 		document.getElementById("buttonRoll").style.background = "#00cc00";
 		document.getElementById("buttonGet").disabled = false;		
 		document.getElementById("buttonGet").style.background = "#00cc00";			
-		document.getElementById("buttonEnd").disabled = false;		
-		document.getElementById("buttonEnd").style.background = "#00cc00";			
+		
+		document.getElementById("buttonEnd").disabled = true;		
+		document.getElementById("buttonEnd").style.background = "gray";			
 	}
  	
 	dicesPlay(){
-		/*console.log(this.countRound);*/
-		
-		if(this.countRound<3){
+		if(this.countRound<2){
 			this.rollDices();
 			this.countRound++;
 		}
 		
-		else{
+		else if(this.countRound==2){
+			this.rollDices();
 			document.getElementById("buttonRoll").disabled = true;
 			document.getElementById("buttonRoll").style.background = "gray";							
-		}		
+		}	
 
 	}
 	
@@ -204,10 +204,7 @@ class gameRound{
 			this.tokyo = this.player;
 			document.getElementById("tokyoMonster").innerHTML = this.player.name;
 			document.getElementById("tokyoMonsterImg").src = "images/" + this.player.id + ".jpg";
-			document.getElementById("tokyoMonsterImg").alt = this.player.name;
-			
-			
-			
+			document.getElementById("tokyoMonsterImg").alt = this.player.name;	
 		}	
 		
 		if(document.getElementById("buttonTokyo").innerHTML=="Beat the Enemies?"){
@@ -221,11 +218,27 @@ class gameRound{
 		}
 		
 		if(document.getElementById("buttonTokyo").innerHTML=="Beat the King?"){
-			console.log("beat " + results.hand);
 			this.tokyo.life-=results.hand;
 			document.getElementById(this.tokyo.id+"Life").innerHTML = "♥ " + this.tokyo.life;
+			
+			if(confirm(this.tokyo.name + " want to get out of Tokyo?")){
+				this.getOutTokyo();
+			}					
 		}			
+		
+		document.getElementById("buttonTokyo").disabled = true;
+		document.getElementById("buttonTokyo").style.background = "gray";	
+		
 	}	
+	
+	getOutTokyo(){
+		/*REDUNDANTE COM DOTOKYO*/
+		this.tokyo.tokyo = 0; 		
+		this.tokyo = this.player;
+		document.getElementById("tokyoMonster").innerHTML = this.player.name;
+		document.getElementById("tokyoMonsterImg").src = "images/" + this.player.id + ".jpg";
+		document.getElementById("tokyoMonsterImg").alt = this.player.name;	
+	}
 	
 	handResults(){	
 		/*if Tokyo is empty, the player can choose go to Tokyo*/
@@ -250,7 +263,30 @@ class gameRound{
 		}
 	}	
 	
-	gainResults(){							
+	/*	
+	heartResults(){		
+		if (this.player = this.tokyo){
+			return false;
+		}		
+		
+		else if (this.player.life == 10){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}*/
+	
+	gainResults(){				
+			
+		/*REDUNDANTE*/
+		document.getElementById("buttonRoll").disabled = true;
+		document.getElementById("buttonRoll").style.background = "gray";
+		
+		document.getElementById("buttonEnd").disabled = false;		
+		document.getElementById("buttonEnd").style.background = "#00cc00";
+		
+						
 		/*Get the dices's results*/		
 		results.getResults(this.dices);
 		
@@ -261,7 +297,7 @@ class gameRound{
 		if(results.hand!=0){
 			this.handResults();	
 		}
-		
+				
 		/*Trasnfer the results to the player*/
 		this.player.life+=results.life;
 		this.player.points+=results.points;
@@ -270,7 +306,12 @@ class gameRound{
 		/*Update de players scores on the html*/
 		document.getElementById(this.player.id+"Life").innerHTML = "♥ " + this.player.life;
 		document.getElementById(this.player.id+"Points").innerHTML = "★ " + this.player.points;
-		document.getElementById(this.player.id+"Money").innerHTML = "⚡ " + this.player.money;		
+		document.getElementById(this.player.id+"Money").innerHTML = "⚡ " + this.player.money;
+
+		document.getElementById("buttonGet").disabled = true;
+		document.getElementById("buttonGet").style.background = "gray";		
+		
+				
 		}
 		
 	endTurn(){		
@@ -290,12 +331,34 @@ class gameRound{
 		document.getElementById("buttonTokyo").innerHTML="Tokyo";
 		document.getElementById("buttonTokyo").disabled = true;
 		document.getElementById("buttonTokyo").style.background = "grey";
+
+		/*Incremente the Player's Tokyo Index*/
+		this.tokyo.tokyo+=1;
+		
+		console.log(this.tokyo.tokyo);
+		if(this.tokyo.tokyo%4==0){
+			this.tokyo.points+=2;
+			/*REDUNDANTE: PRINT POINTS*/
+			document.getElementById(this.player.id+"Points").innerHTML = "★ " + this.player.points;
+		}
 		
 		/*Reativate the dices*/
 		this.dicesActivate();
 		
 		/*Create new dices*/
-		this.createDices();					
+		this.createDices();		
+		
+		if(this.maxPoint.points()>=5){
+			document.getElementById("buttonRoll").disabled = true;
+			document.getElementById("buttonRoll").style.background = "gray";
+			document.getElementById("buttonGet").disabled = true;		
+			document.getElementById("buttonGet").style.background = "gray";					
+			document.getElementById("buttonEnd").disabled = true;		
+			document.getElementById("buttonEnd").style.background = "gray";	
+			document.getElementById("buttonTokyo").disabled = true;
+			document.getElementById("buttonTokyo").style.background = "gray";		
+			alert("Congratulations! " + this.maxPoint.name + " won the game!")
+		}			
 	}	
 	
 }
