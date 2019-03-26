@@ -333,14 +333,17 @@ class gameRound{
 		document.getElementById("buttonTokyo").style.background = "grey";
 
 		/*Incremente the Player's Tokyo Index*/
-		this.tokyo.tokyo+=1;
-		
-		console.log(this.tokyo.tokyo);
-		if(this.tokyo.tokyo%4==0){
+		if(this.tokyo != null){
+			this.tokyo.tokyo+=1;
+			
+			if(this.tokyo.tokyo%4==0){
 			this.tokyo.points+=2;
 			/*REDUNDANTE: PRINT POINTS*/
 			document.getElementById(this.player.id+"Points").innerHTML = "★ " + this.player.points;
+			}		
 		}
+		
+		
 		
 		/*Reativate the dices*/
 		this.dicesActivate();
@@ -348,7 +351,7 @@ class gameRound{
 		/*Create new dices*/
 		this.createDices();		
 		
-		if(this.maxPoint.points()>=5){
+		if(this.maxPoint().points>=20){
 			document.getElementById("buttonRoll").disabled = true;
 			document.getElementById("buttonRoll").style.background = "gray";
 			document.getElementById("buttonGet").disabled = true;		
@@ -357,7 +360,7 @@ class gameRound{
 			document.getElementById("buttonEnd").style.background = "gray";	
 			document.getElementById("buttonTokyo").disabled = true;
 			document.getElementById("buttonTokyo").style.background = "gray";		
-			alert("Congratulations! " + this.maxPoint.name + " won the game!")
+			alert("Congratulations! " + this.maxPoint().name + " won the game!")
 		}			
 	}	
 	
