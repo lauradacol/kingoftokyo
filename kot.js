@@ -237,6 +237,21 @@ class gameRound{
 		this.playersArray.splice(this.playersArray.indexOf(thePlayer),1);		
 	}	
 
+
+	killMany(){
+		var i;
+		for(i=0; i<this.playersArray.length;i++){
+			if(this.playersArray[i].isDead()){
+				this.deathPlayer(this.playersArray[i]);
+				this.killMany();
+			}
+			
+			if(i == (this.playersArray.length-1)){
+				break;
+			}
+		}
+	}
+
 /***********************************************************************
  * 
  * TOKYO FUNCTIONS 
@@ -252,23 +267,14 @@ class gameRound{
 	beatEnemies(){
 		var i;
 			
-		for(i=0; i<=this.playersArray.length; i++){			
-			if(this.playersArray[i]!=this.player){
-				console.log("enter here");
-				console.log(results.hand);									
+		for(i=0; i<this.playersArray.length; i++){			
+			if(this.playersArray[i]!=this.player){			
 				this.playersArray[i].life-=results.hand;
-				document.getElementById(this.playersArray[i].id+"Life").innerHTML = "♥ " + this.playersArray[i].life;	
-				
-				console.log(this.playersArray[i].life);					
+				document.getElementById(this.playersArray[i].id+"Life").innerHTML = "♥ " + this.playersArray[i].life;				
 			}
 		}
-		/*
-		for(i=0; i<=this.playersArray.length; i++){
-			console.log("enter here");
-			if(this.playersArray[i].isDead()){
-				this.deathPlayer(this.playersArray[i]);
-			}
-		}*/
+								
+		this.killMany();
 	}	
 	
 	
