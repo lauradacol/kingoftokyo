@@ -147,9 +147,9 @@ class gameRound{
 	constructor(){
 		this.playersArray = new Array();
 		this.playersArray.push(new player("Meka Dragon", "mekaDragon", 10, 0, 0, 0));
-		this.playersArray.push(new player("Cyber Bunny", "cyberBunny", 10, 0, 0, 0));
-		this.playersArray.push(new player("The King", "theKing", 10, 0, 0, 0));		
-		this.playersArray.push(new player("Giga Zaur", "gigaZaur", 10, 0, 0, 0));
+		this.playersArray.push(new player("Cyber Bunny", "cyberBunny", 5, 0, 0, 0));
+		this.playersArray.push(new player("The King", "theKing", 7, 0, 0, 0));		
+		this.playersArray.push(new player("Giga Zaur", "gigaZaur", 8, 0, 0, 0));
 		
 		this.player = player;
 		this.dices = new Array();
@@ -168,15 +168,23 @@ class gameRound{
 	}
 	
 	maxPoint(){
-		var i;
-		var maxPoint = this.playersArray[0];
+		var i;		
+		var maxPoint = 0;
+		var index = 0;
 		
 		for(i=0; i<this.playersArray.length; i++){
-			if(this.playersArray[i].points > maxPoint.points){
-				maxPoint = this.playersArray[i];
-			}			
-		}
-		return maxPoint;
+			/*SE O JOGADOR NÃO ESTA MORTO*/
+			if(this.playersArray[i].isDead()==false){
+				console.log("here");
+				if(this.playersArray[i].points > maxPoint){					
+					maxPoint = this.playersArray[i].points;
+					index = i;
+				}					
+			}		
+		}		
+		console.log(this.playersArray[this.playersArray.indexOf(index)]);
+				
+		return this.playersArray[this.playersArray.indexOf(index)];
 	}	
 	
 
@@ -233,8 +241,16 @@ class gameRound{
 	}
 	
 	deathPlayer(thePlayer){
+		console.log("enter here");
 		thePlayer.colorsOfDeath();					
-		this.playersArray.splice(this.playersArray.indexOf(thePlayer),1);		
+		
+		console.log(this.playersArray.indexOf(thePlayer));
+		
+		this.playersArray[this.playersArray.indexOf(thePlayer)] = null;
+		console.log(this.playersArray);
+		
+		/*
+		this.playersArray.splice(this.playersArray.indexOf(thePlayer),1);*/
 	}	
 
 /***********************************************************************
@@ -252,23 +268,18 @@ class gameRound{
 	beatEnemies(){
 		var i;
 			
-		for(i=0; i<=this.playersArray.length; i++){			
-			if(this.playersArray[i]!=this.player){
-				console.log("enter here");
-				console.log(results.hand);									
+		for(i=0; i<this.playersArray.length; i++){			
+			if(this.playersArray[i]!=this.player){		
 				this.playersArray[i].life-=results.hand;
-				document.getElementById(this.playersArray[i].id+"Life").innerHTML = "♥ " + this.playersArray[i].life;	
-				
-				console.log(this.playersArray[i].life);					
+				document.getElementById(this.playersArray[i].id+"Life").innerHTML = "♥ " + this.playersArray[i].life;				
 			}
 		}
-		/*
-		for(i=0; i<=this.playersArray.length; i++){
-			console.log("enter here");
+		
+		for(i=0; i<this.playersArray.length; i++){
 			if(this.playersArray[i].isDead()){
 				this.deathPlayer(this.playersArray[i]);
 			}
-		}*/
+		}
 	}	
 	
 	
@@ -277,11 +288,12 @@ class gameRound{
 		document.getElementById(this.tokyo.id+"Life").innerHTML = "♥ " + this.tokyo.life;
 		
 		if(confirm(this.tokyo.name + " want to get out of Tokyo?")){
-			if(this.tokyo.isDead(this.tokyo)){
-				this.deathPlayer(this.tokyo);							
-			}
 			this.getOutTokyo();
 		}
+			
+		if(this.tokyo.isDead(this.tokyo)){
+			this.deathPlayer(this.tokyo);							
+		}		
 	}
 	
 	doTokyo(){
@@ -390,12 +402,27 @@ class gameRound{
 /***********************************************************************
  * THE END TURN FUNCTION
  **********************************************************************/		
+	playerIndex(index){
+		
+		var newIndex = (playerIndex+1)%this.playersArray.length;
+		
+		if(this.playersArray[newIndex] == null){
+			/*this.playerIndex(newIndex);*/
+			return (playerIndex+1)%this.playersArray.length
+		}
+		else{
+			return newIndex;
+		}
+		
+		console.log(newIndex);		
+	}
+	
 	endTurn(){		
 		/*Change player border*/
 		document.getElementById(this.player.id).style.border = "none";
 				
-		/*Change player index to get the next player*/
-		playerIndex = (this.playersArray.indexOf(this.player)+1)%this.playersArray.length;
+		/*Change player index to get the next player*/				
+		playerIndex = this.playerIndex(playerIndex);
 								
 		/*Get the next player*/
 		this.player = round.playersArray[playerIndex];		
@@ -427,7 +454,7 @@ class gameRound{
 		this.createDices();		
 		
 		/*The end of the game*/
-		this.winGame();
+		/*this.winGame();*/
 					
 	}	
 	
