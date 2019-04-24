@@ -66,7 +66,7 @@ class player{
 	}
 	
 	isDead(){
-		if(this.life <=9){
+		if(this.life <=0){
 			return true;
 		}
 		else{
@@ -178,8 +178,6 @@ class gameRound{
 		}
 		return maxPoint;
 	}	
-	
-
 	
 	createDices(){
 		this.dices = new Array();
@@ -336,12 +334,13 @@ class gameRound{
 	}	
 	
 		
-	heartResults(){	
+	heartResults(hearts){	
 		if (this.player == this.tokyo){
 			return false;
 		}		
 		
-		else if (this.player.life >= 10){
+		else if ((this.player.life + hearts) >= 10){
+			this.player.life = 10;
 			return false;
 		}
 		else{
@@ -366,7 +365,7 @@ class gameRound{
 				
 		/*Trasnfer the results to the player*/
 		
-		if(this.heartResults()==true){
+		if(this.heartResults(results.life)==true){
 			this.player.life+=results.life;		
 		}		
 		this.player.points+=results.points;
@@ -382,7 +381,7 @@ class gameRound{
 
 
 	winGame(){
-		if(this.maxPoint().points>=20 || this.playersArray.length<=1){			
+		if(this.maxPoint().points>=10 || this.playersArray.length<=1){			
 			this.disableButton("buttonRoll");
 			this.disableButton("buttonGet");
 			this.disableButton("buttonEnd");						
