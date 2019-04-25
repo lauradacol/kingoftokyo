@@ -82,7 +82,7 @@ class player{
 		document.getElementById(this.id+"Life").style.color = "red";
 		document.getElementById(this.id+"Points").style.color = "grey";
 		document.getElementById(this.id+"Money").style.color = "grey";	
-	}
+	}	
 }
 
 class roundResults{
@@ -287,23 +287,7 @@ class gameRound{
 			this.getOutTokyo();
 		}
 	}
-	
-	doTokyo(){
-		if(document.getElementById("buttonTokyo").innerHTML=="Go to Tokyo?"){
-			this.enterTokyo();
-		}	
 		
-		if(document.getElementById("buttonTokyo").innerHTML=="Beat the Enemies?"){
-			this.beatEnemies();
-		}
-		
-		if(document.getElementById("buttonTokyo").innerHTML=="Beat the King?"){
-			this.beatKing();
-		}			
-
-		this.disableButton("buttonTokyo");
-	}	
-	
 	getOutTokyo(){
 		this.tokyo.tokyo = 0; 		
 		this.enterTokyo();
@@ -316,21 +300,17 @@ class gameRound{
  * 
  **********************************************************************/	
 	handResults(){	
-		this.enableButton("buttonTokyo");		
-		/*if Tokyo is empty, the player can choose go to Tokyo*/
 		if(this.tokyo==null){
-			document.getElementById("buttonTokyo").innerHTML = "Go to Tokyo?";	
-		}		
-			
-		/*If the player is in Tokyo*/
-		else if(this.tokyo==this.player){
-			document.getElementById("buttonTokyo").innerHTML = "Beat the Enemies?";					
-		}
+			this.enterTokyo();
+		}	
 		
-		/*If Tokyo is ocupied by another player*/
+		else if(this.tokyo==this.player){
+			this.beatEnemies();					
+		}		
+
 		else if(this.tokyo!=this.player){
-			document.getElementById("buttonTokyo").innerHTML = "Beat the King?";					
-		}
+			this.beatKing();					
+		}		
 	}	
 	
 		
@@ -381,15 +361,15 @@ class gameRound{
 
 
 	winGame(){
-		if(this.maxPoint().points>=10 || this.playersArray.length<=1){			
+		if(this.maxPoint().points>=5 || this.playersArray.length<=1){			
 			this.disableButton("buttonRoll");
 			this.disableButton("buttonGet");
-			this.disableButton("buttonEnd");						
-			this.disableButton("buttonTokyo");		
+			this.disableButton("buttonEnd");							
 			alert("Congratulations! " + this.maxPoint().name + " won the game!")
+			location.reload();
+			
 		}
-	}
-		
+	}		
 
 
 /***********************************************************************
@@ -409,11 +389,6 @@ class gameRound{
 		/*Clear the results*/
 		results.clearResults();
 		
-		/*Tokyo Button*/
-		document.getElementById("buttonTokyo").innerHTML="Tokyo";
-		
-		this.disableButton("buttonTokyo");
-
 		/*Incremente the Player's Tokyo Index*/
 		if(this.tokyo != null){
 			this.tokyo.tokyo+=1;
@@ -438,15 +413,19 @@ class gameRound{
 	
 }
 
+
 /*Creating a result object*/
 var results = new roundResults();
 
 /*Creating a gameRound object*/	
 var round = new gameRound();
 var playerIndex = 0;
-round.player = round.playersArray[playerIndex];		
+round.player = round.playersArray[playerIndex];	
+
 
 function gamePlay(){	
+		console.log("aqui");
+
 		document.getElementById(round.player.id).style.border = "5px solid red";
 		
 		/*DESATIVAR BOTOES*/
