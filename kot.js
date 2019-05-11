@@ -31,6 +31,24 @@ class dice {
 				
 	} 
 	
+	enableChooseDice(id){
+		if(round.countRound > 0){
+			this.chooseDice(id);
+		}
+	}	
+
+	testAllDicesBlocked(){		
+		if(round.countRound <= 2){
+			if(round.allDicesBlocked()){
+				round.disableButton("buttonRoll");				
+			}
+			
+			else{
+				round.enableButton("buttonRoll");
+			}		
+		}
+	}
+	
 	chooseDice(id){
 		if(this.picked==0){
 			this.picked = 1;
@@ -45,6 +63,9 @@ class dice {
 			document.getElementById("d"+id).style.border = "2px solid #00cc00";					
 			document.getElementById("p"+id).style.display = "none";
 		}
+		
+		this.testAllDicesBlocked();
+		
 	}
 	
 	diceInit(id){
@@ -178,6 +199,12 @@ class gameRound{
 		}
 		return maxPoint;
 	}	
+
+/***********************************************************************
+ * 
+ * DICES FUNCTIONS
+ * 
+***********************************************************************/	
 	
 	createDices(){
 		this.dices = new Array();
@@ -186,8 +213,7 @@ class gameRound{
 		for(i=0; i<6; i++){	
 			this.dices.push(new dice(i+1));
 			this.dices[i].diceInit(i+1);
-		}
-			
+		}		
 	}	
 	
 	rollDices(){	
@@ -201,18 +227,30 @@ class gameRound{
 	
  	dicesActivate(){
 		this.enableButton("buttonRoll");
-		this.enableButton("buttonGet");
-		this.disableButton("buttonEnd");			
+		this.enableButton("buttonEnd");		
 	}
  	
+ 	allDicesBlocked(){
+		var i;
+		for(i=0; i<6; i++){
+			if(this.dices[i].picked == 0){	
+				return false;								
+			}
+		}
+		return true;		
+	}
+ 	
+ 	
 	dicesPlay(){
+		console.log("countRound: " + this.countRound);
 		if(this.countRound<2){
 			this.rollDices();
 			this.countRound++;
 		}
-		
+				
 		else if(this.countRound==2){
 			this.rollDices();
+			this.countRound++;
 			this.disableButton("buttonRoll");
 		}
 	}
@@ -302,14 +340,17 @@ class gameRound{
 	handResults(){	
 		if(this.tokyo==null){
 			this.enterTokyo();
+			return 1;
 		}	
 		
 		else if(this.tokyo==this.player){
-			this.beatEnemies();					
+			this.beatEnemies();			
+			return 2;
 		}		
 
 		else if(this.tokyo!=this.player){
-			this.beatKing();					
+			this.beatKing();		
+			return 3;
 		}		
 	}	
 	
@@ -328,9 +369,26 @@ class gameRound{
 		}
 	}
 	
+	logFunction(tokyoAction){
+		console.log(this.player.name + " actions:");
+		console.log(results.life + " ♥," + results.points + " ★," + results.money + " ⚡");
+		
+		if(tokyoAction == 1){
+			console.log(this.player.name + " has entered in Tokyo");
+		}
+		
+		else if(tokyoAction == 2){
+			console.log("All players took " + results.hand + " of damage from " + this.player.name);
+		}	
+		
+		else if(tokyoAction == 3){
+			console.log(this.tokyo.name + " took " + results.hand + " of damage from " + this.player.name);
+		}	
+				
+	}
+	
 	gainResults(){			
 		this.disableButton("buttonRoll");
-		this.enableButton("buttonEnd");	
 						
 		/*Get the dices's results*/		
 		results.getResults(this.dices);
@@ -339,8 +397,9 @@ class gameRound{
 		results.countPoints();
 		
 		/*Tokyo*/
+		var tokyoAction = 0;
 		if(results.hand!=0){
-			this.handResults();	
+			tokyoAction = this.handResults();	
 		}
 				
 		/*Trasnfer the results to the player*/
@@ -355,17 +414,19 @@ class gameRound{
 		document.getElementById(this.player.id+"Life").innerHTML = "♥ " + this.player.life;
 		document.getElementById(this.player.id+"Points").innerHTML = "★ " + this.player.points;
 		document.getElementById(this.player.id+"Money").innerHTML = "⚡ " + this.player.money;
-
-		this.disableButton("buttonGet");				
+		
+		
+		this.logFunction(tokyoAction);
+		this.endTurn();			
 		}
 
 
 	winGame(){
 		if(this.maxPoint().points>=5 || this.playersArray.length<=1){			
 			this.disableButton("buttonRoll");
-			this.disableButton("buttonGet");
 			this.disableButton("buttonEnd");							
 			alert("Congratulations! " + this.maxPoint().name + " won the game!")
+			alert("New game?");			
 			location.reload();
 			
 		}
@@ -412,7 +473,7 @@ class gameRound{
 	}	
 	
 }
-
+/**************************************************************************************************************/
 
 /*Creating a result object*/
 var results = new roundResults();
@@ -424,8 +485,6 @@ round.player = round.playersArray[playerIndex];
 
 
 function gamePlay(){	
-		console.log("aqui");
-
 		document.getElementById(round.player.id).style.border = "5px solid red";
 		
 		/*DESATIVAR BOTOES*/
