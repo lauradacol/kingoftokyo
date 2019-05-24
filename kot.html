@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="style.css">
 	<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
   
 <body>
@@ -18,9 +19,12 @@
 			<img src="images/mekaDragon.jpg" class="monsters" alt="Meka Dragon" id="mekaDragon">
 			<p class="infoMonster life" id="mekaDragonLife">♥ 10</p>
 			<p class="infoMonster points" id="mekaDragonPoints">★ 0</p>
-			<p class="infoMonster money" id="mekaDragonMoney">⚡ 0</p>					
+			<p class="infoMonster money" id="mekaDragonMoney">⚡ 0</p>								
 		</div>
+		<img src="images/cards/chefeDoRebanho.png" class="cards" alt="Chefe do Rebanho" id="chefeDoRebanho">
 
+
+	<br>
 		<br>
 
 		<p class="nameMonster">Cyber Bunny</p>
@@ -66,9 +70,32 @@
 		</div>
 		<br>								
 		<button class="button" id="buttonRoll" onclick="round.dicesPlay()" disabled style="background:gray;">Roll Dice</button>	
-<!--		<button class="button" id="buttonGet" onclick="round.gainResults()" disabled style="background:gray;">Get Results</button> -->
-<!--		<button class="button" id="buttonTokyo" onclick="round.doTokyo()" disabled style="background:gray;">Tokyo</button>-->
 		<button class="button" id="buttonEnd" onclick="round.gainResults()" disabled style="background:gray;">End Turn</button>
+
+
+		<br><br>
+		<div class="cards">
+			<p class="infoCard price" id="c1Price">10 ⚡</p>
+			<p class="infoCard name" id="c1Name">Name</p>
+			<p class="infoCard action" id="c1Action">Action</p>
+			<p class="infoCard description" id="c1Description">Description</p>
+		</div>
+		<div class="cards">
+			<p class="infoCard price" id="c2Price">10 ⚡</p>
+			<p class="infoCard name" id="c2Name">Name</p>
+			<p class="infoCard action" id="c2Action">Action</p>
+			<p class="infoCard description" id="c2Description">Description</p>
+		</div>	
+		<div class="cards">
+			<p class="infoCard price" id="c3Price">10 ⚡</p>
+			<p class="infoCard name" id="c3Name">Name</p>
+			<p class="infoCard action" id="c3Action">Action</p>
+			<p class="infoCard description" id="c3Description">Description</p>
+		</div>
+		
+		<br><br>
+		<button class="button" id="buttonCard" onclick="deckPack.initCards()">+1 ★</button>
+		<br><br>
 
 
 		<p class="nameMonster" id="tokyoMonster"></p>

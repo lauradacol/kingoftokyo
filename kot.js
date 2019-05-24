@@ -84,6 +84,7 @@ class player{
 		this.points = points;
 		this.money = money;
 		this.tokyo = tokyo;
+		this.playerCards = new Array();
 	}
 	
 	isDead(){
@@ -163,6 +164,58 @@ class roundResults{
 	}		
 }
 /*******************************************************/
+class card{	
+	constructor(name, id, action, description, price){
+		this.name = name;
+		this.id = id;	
+		this.action = action;
+		this.description = description;
+		this.price = price;
+	}
+}
+
+/*******************************************************/
+class deck{	
+	constructor(){		
+		this.cards = new Array();
+		this.cards.push(new card("Aviões de Combate", 0, "discard", "+5★ e sofra 4 de dano", 5));
+		this.cards.push(new card("Ele só está ficando mais forte", 1, "constant", "Quando perder 2♥  ou mais, ganhe 1⚡", 3));
+		this.cards.push(new card("Chefe do rebanho", 2, "constant", "Uma vez por turno, você pode modificar 1 de seus dados para 1", 3));
+		this.cards.push(new card("Lojinha da esquina", 3, "discard", "+1★", 3));
+		this.cards.push(new card("Vindo do alto", 4, "discard", "+2★ e assuma o controle de Tóquio, caso já não o tenha", 5));
+		this.cards.push(new card("Cauda com pontas", 5, "constant", "Quando atacar, cause 1 dano extra", 5));					
+		this.cards.push(new card("Aviões de Combate", 6, "discard", "+5★ e sofra 4 de dano", 5));
+		this.cards.push(new card("Ele só está ficando mais forte", 7, "constant", "Quando perder 2♥  ou mais, ganhe 1⚡", 3));
+		this.cards.push(new card("Chefe do rebanho", 8, "constant", "Uma vez por turno, você pode modificar 1 de seus dados para 1", 3));
+		this.cards.push(new card("Lojinha da esquina", 9, "discard", "+1★", 3));
+		this.cards.push(new card("Vindo do alto", 10, "discard", "+2★ e assuma o controle de Tóquio, caso já não o tenha", 5));
+		this.cards.push(new card("Cauda com pontas", 11, "constant", "Quando atacar, cause 1 dano extra", 5));		
+
+	}
+	
+    shuffle(){
+        var index = Math.floor( Math.random() * this.cards.length) + 1;		       
+        return this.cards[index];	        
+    }
+    
+    initCards(){
+		var i;		
+		for(i=1; i<4; i++){
+			var theCard = this.shuffle();			
+			round.cardsOnTable.push(theCard);
+			this.cards.splice(this.cards.indexOf(theCard),1);
+					
+			document.getElementById("c" + i + "Price").innerHTML = theCard.price + " ⚡";
+			document.getElementById("c" + i + "Name").innerHTML = theCard.name;
+			document.getElementById("c" + i + "Action").innerHTML = theCard.action;
+			document.getElementById("c" + i + "Description").innerHTML = theCard.description;			
+		}
+	}
+   
+    
+}
+
+/*******************************************************/
 
 class gameRound{
 	constructor(){
@@ -176,6 +229,7 @@ class gameRound{
 		this.dices = new Array();
 		this.countRound = 0;
 		this.tokyo = null;
+		this.cardsOnTable = new Array();
 	}
 	
 	enableButton(id){
@@ -483,6 +537,8 @@ var round = new gameRound();
 var playerIndex = 0;
 round.player = round.playersArray[playerIndex];	
 
+/*Creating a deck pack*/
+var deckPack = new deck();
 
 function gamePlay(){	
 		document.getElementById(round.player.id).style.border = "5px solid red";

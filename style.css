@@ -57,14 +57,10 @@ body{
 	position: absolute;
 }
 
-#player{
-	padding: 15px;
-}
-
 .players{
 	text-align: center;
 	position: relative;
-	margin-bottom: 50px;
+	margin-bottom: 10px;
 }
 
 .nameMonster{
@@ -164,3 +160,75 @@ body{
 	max-width: 30%;
 	height: auto;
 }
+
+/*descobrir o que está duplicando*/
+.cards{
+	height: 250px;
+	width: 200px;
+	display: inline-block;
+	border: 2px solid black;
+	border-radius: 10px;
+	background: black;
+	color: red;
+	text-align: center;
+	font-size:50px;
+	cursor: pointer;
+	position: relative;	
+	margin: 5px;
+}
+
+.infoCard{
+	display: inline-block;
+	margin: 5px;
+	padding: 5px;	
+	font-family: 'Luckiest Guy', cursive;
+	font-size: 20px;
+	/*
+	border-bottom: 2px solid gray;
+	border-right: 2px solid gray;
+	border-top: 2px solid white;
+	border-left: 2px solid white;*/
+}
+
+.price{
+	font-size:30px;
+	background: white;
+	color: black;
+	position: absolute;
+	top: -5;
+	left: -5;
+	border-radius: 100px;
+}
+
+.name{
+	color: #66b3ff;
+	position: absolute;
+	top: 10;
+	left: 70;
+
+}
+
+.action{
+	color: #66b3ff;
+	position: absolute;
+	top: 100;
+	left: 70;
+}
+
+.description{
+	font-family: 'Montserrat', sans-serif;
+	background: white;
+	color: black;
+	position: absolute;
+	padding: 15px;
+	bottom: 0;
+	left: 5;
+	font-size: 15px;
+	width: 150px;
+	text-align: center;
+	border-radius: 15px;
+
+}
+
+
+
