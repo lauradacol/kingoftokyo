@@ -177,6 +177,24 @@ body{
 	margin: 5px;
 }
 
+.miniCards{
+	position: relative;
+	border: 2px solid red;
+}
+
+.miniCard{
+	position: relative;
+	width: 10%;
+	right: 0px;
+}
+
+.miniCard:hover {
+	transform: scale(5.5);
+	z-index: 30;
+
+	
+}
+
 .infoCard{
 	display: inline-block;
 	margin: 5px;
