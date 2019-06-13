@@ -549,7 +549,18 @@ function gamePlay(){
 		round.dicesActivate();
 		round.createDices();
 		}		
+
+for(i=0; i<4; i++){
+	var cardPrice = document.createElement("p");
+	cardPrice.className+="infoCard price";
+	cardPrice.innerText = "10";
 	
+	var newCard = document.createElement("div");	
+	newCard.appendChild(cardPrice);
+	
+	newCard.className += "cards miniCard";
+	miniCards.appendChild(newCard);
+}
 
 
 
