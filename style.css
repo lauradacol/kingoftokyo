@@ -179,7 +179,7 @@ body{
 .miniCards{
 	position: relative;
 	border: 2px solid red;
-	height: 200px;
+	height: 150px;
 }
 
 .miniCard{
@@ -198,6 +198,26 @@ body{
 	z-index: 30;
 }
 
+.miniCard .description{
+	width: 95%;
+	padding: 2px;
+	border-radius: 5px;
+	left: -5px;
+	bottom: -5px;
+}
+
+.miniCard .name{
+	top: -5;
+	left: 5;
+	font-size: 50%;
+	width: 70%;
+}
+
+.miniCard .action{
+	top: 20%;
+	left: 10%;
+}
+
 .infoCard{
 	display: inline-block;
 	margin: 5px;
@@ -207,7 +227,7 @@ body{
 }
 
 .price{
-	font-size: 100%;
+	font-size: 70%;
 	background: white;
 	color: black;
 	position: absolute;
@@ -217,30 +237,31 @@ body{
 }
 
 .name{
+	width: 70%;
 	color: #66b3ff;
 	position: absolute;
 	top: 10;
-	left: 70;
-
+	left: 50;
 }
 
 .action{
+	font-size: 70%;
 	color: #66b3ff;
 	position: absolute;
 	top: 100;
-	left: 70;
+	left: 50;
 }
 
 .description{
+	font-size: 50%;
 	font-family: 'Montserrat', sans-serif;
 	background: white;
 	color: black;
 	position: absolute;
 	padding: 15px;
 	bottom: 0;
-	left: 5;
-	font-size: 15px;
-	width: 150px;
+	left: 5;	
+	width: 75%;
 	text-align: center;
 	border-radius: 15px;
 

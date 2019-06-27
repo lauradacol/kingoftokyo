@@ -550,13 +550,29 @@ function gamePlay(){
 		round.createDices();
 		}		
 
-for(i=0; i<4; i++){
+for(i=0; i<10; i++){
 	var cardPrice = document.createElement("p");
 	cardPrice.className+="infoCard price";
 	cardPrice.innerText = "10";
 	
+	var cardDescription = document.createElement("p");
+	cardDescription.className+="infoCard description";
+	cardDescription.innerText = "+2★ e assuma o controle de Tóquio, caso já não o tenha";
+	
+	var cardName = document.createElement("p");
+	cardName.className+="infoCard name";
+	cardName.innerText = "Ele só está ficando mais forte";	
+
+	var cardAction = document.createElement("p");
+	cardAction.className+="infoCard action";
+	cardAction.innerText = "Discard";	
+	
 	var newCard = document.createElement("div");	
 	newCard.appendChild(cardPrice);
+	newCard.appendChild(cardDescription);
+	newCard.appendChild(cardName);
+	newCard.appendChild(cardAction);
+
 	
 	newCard.className += "cards miniCard";
 	miniCards.appendChild(newCard);
