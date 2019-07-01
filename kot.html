@@ -10,7 +10,7 @@
 <body>
 	<header>
 		King of Tokyo		
-		<button class="button" id="buttonStart" onclick="gamePlay()">START</button>
+		<button class="button" id="buttonStart" onclick="gamePlay(); deckPack.initCards();">START</button>
 	</header>
 	
 	<section id="left">
@@ -75,27 +75,31 @@
 
 
 		<br><br>
-		<div class="cards">
+		<div class="cards" onclick="deckPack.pickCard('c1')">
 			<p class="infoCard price" id="c1Price">10 ⚡</p>
 			<p class="infoCard name" id="c1Name">Name</p>
 			<p class="infoCard action" id="c1Action">Action</p>
 			<p class="infoCard description" id="c1Description">Description</p>
+			<p hidden id="c1Index">Id</p>
 		</div>
-		<div class="cards">
+		<div class="cards"  onclick="deckPack.pickCard('c2')">
 			<p class="infoCard price" id="c2Price">10 ⚡</p>
 			<p class="infoCard name" id="c2Name">Name</p>
 			<p class="infoCard action" id="c2Action">Action</p>
 			<p class="infoCard description" id="c2Description">Description</p>
+			<p hidden id="c2Index">Id</p>
+			
 		</div>	
-		<div class="cards">
+		<div class="cards" onclick="deckPack.pickCard('c3')"> 
 			<p class="infoCard price" id="c3Price">10 ⚡</p>
 			<p class="infoCard name" id="c3Name">Name</p>
 			<p class="infoCard action" id="c3Action">Action</p>
 			<p class="infoCard description" id="c3Description">Description</p>
+			<p hidden id="c3Index">Id</p>
 		</div>
 		
 		<br><br>
-		<button class="button" id="buttonCard" onclick="deckPack.initCards()">+1 ★</button>
+		<!--<button class="button" id="buttonCard" onclick="deckPack.initCards()">+1 ★</button>-->
 		<br><br>
 
 

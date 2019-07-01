@@ -172,46 +172,89 @@ class card{
 		this.description = description;
 		this.price = price;
 	}
+	
+	
+	pickCard(){		
+		var cardPrice = document.createElement("p");
+		cardPrice.className+="infoCard price";
+		cardPrice.innerText = this.price;
+		
+		var cardDescription = document.createElement("p");
+		cardDescription.className+="infoCard description";
+		cardDescription.innerText = this.description;
+		
+		var cardName = document.createElement("p");
+		cardName.className+="infoCard name";
+		cardName.innerText = this.name;	
+
+		var cardAction = document.createElement("p");
+		cardAction.className+="infoCard action";
+		cardAction.innerText = this.action;	
+		
+		var newCard = document.createElement("div");	
+		newCard.appendChild(cardPrice);
+		newCard.appendChild(cardDescription);
+		newCard.appendChild(cardName);
+		newCard.appendChild(cardAction);
+
+		
+		newCard.className += "cards miniCard";
+		miniCards.appendChild(newCard);
+	}	
+	
 }
 
 /*******************************************************/
 class deck{	
 	constructor(){		
-		this.cards = new Array();
+		this.cards = new Array();		
 		this.cards.push(new card("Aviões de Combate", 0, "discard", "+5★ e sofra 4 de dano", 5));
 		this.cards.push(new card("Ele só está ficando mais forte", 1, "constant", "Quando perder 2♥  ou mais, ganhe 1⚡", 3));
 		this.cards.push(new card("Chefe do rebanho", 2, "constant", "Uma vez por turno, você pode modificar 1 de seus dados para 1", 3));
 		this.cards.push(new card("Lojinha da esquina", 3, "discard", "+1★", 3));
-		this.cards.push(new card("Vindo do alto", 4, "discard", "+2★ e assuma o controle de Tóquio, caso já não o tenha", 5));
+		this.cards.push(new card("Vindo do alto", 4, "discard", "+2★ e assuma o controle de Tóquio, caso já não o tenha", 5));		
 		this.cards.push(new card("Cauda com pontas", 5, "constant", "Quando atacar, cause 1 dano extra", 5));					
 		this.cards.push(new card("Aviões de Combate", 6, "discard", "+5★ e sofra 4 de dano", 5));
 		this.cards.push(new card("Ele só está ficando mais forte", 7, "constant", "Quando perder 2♥  ou mais, ganhe 1⚡", 3));
 		this.cards.push(new card("Chefe do rebanho", 8, "constant", "Uma vez por turno, você pode modificar 1 de seus dados para 1", 3));
 		this.cards.push(new card("Lojinha da esquina", 9, "discard", "+1★", 3));
 		this.cards.push(new card("Vindo do alto", 10, "discard", "+2★ e assuma o controle de Tóquio, caso já não o tenha", 5));
-		this.cards.push(new card("Cauda com pontas", 11, "constant", "Quando atacar, cause 1 dano extra", 5));		
-
+		this.cards.push(new card("Cauda com pontas", 11, "constant", "Quando atacar, cause 1 dano extra", 5));			
+	}
+	
+	/*para debug*/
+	printCards(){
+		console.log(this.cards.length);
+		
+		for(var i=0; i<this.cards.length;i++){
+			console.log(this.cards[i]);
+		}
+		
 	}
 	
     shuffle(){
-        var index = Math.floor( Math.random() * this.cards.length) + 1;		       
-        return this.cards[index];	        
+        var index = Math.floor(Math.random() * (this.cards.length-1)) + 1;		       
+        return this.cards[index]; 
     }
     
     initCards(){
 		var i;		
 		for(i=1; i<4; i++){
-			var theCard = this.shuffle();			
+			var theCard = this.shuffle();	
 			round.cardsOnTable.push(theCard);
-			this.cards.splice(this.cards.indexOf(theCard),1);
-					
+				
 			document.getElementById("c" + i + "Price").innerHTML = theCard.price + " ⚡";
 			document.getElementById("c" + i + "Name").innerHTML = theCard.name;
 			document.getElementById("c" + i + "Action").innerHTML = theCard.action;
-			document.getElementById("c" + i + "Description").innerHTML = theCard.description;			
+			document.getElementById("c" + i + "Description").innerHTML = theCard.description;	
+			document.getElementById("c" + i + "Index").innerHTML = theCard.id;					
 		}
 	}
    
+	pickCard(c){		
+		var index = document.getElementById(c+ "Index").innerHTML;
+		this.cards[index].pickCard();		
+	}
     
 }
 
@@ -550,6 +593,7 @@ function gamePlay(){
 		round.createDices();
 		}		
 
+/*
 for(i=0; i<10; i++){
 	var cardPrice = document.createElement("p");
 	cardPrice.className+="infoCard price";
@@ -576,7 +620,7 @@ for(i=0; i<10; i++){
 	
 	newCard.className += "cards miniCard";
 	miniCards.appendChild(newCard);
-}
+}*/
 
 
 
