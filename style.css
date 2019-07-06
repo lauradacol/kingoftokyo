@@ -147,6 +147,8 @@ body{
 	font-size:50px;
 	cursor: pointer;
 	position: relative;
+	vertical-align: middle;
+
 }
 
 #p1, #p2, #p3, #p4, #p5, #p6{
@@ -156,9 +158,9 @@ body{
 	display: none;
 	max-width: 30%;
 	height: auto;
+	
 }
 
-/*descobrir o que está duplicando*/
 .cards{
 	height: 250px;
 	width: 200px;

@@ -174,7 +174,7 @@ class card{
 	}
 	
 	
-	pickCard(){		
+	pickCard(id){		
 		var cardPrice = document.createElement("p");
 		cardPrice.className+="infoCard price";
 		cardPrice.innerText = this.price;
@@ -198,8 +198,9 @@ class card{
 		newCard.appendChild(cardAction);
 
 		
-		newCard.className += "cards miniCard";
-		miniCards.appendChild(newCard);
+		newCard.className += "cards miniCard";		
+		var idCard = document.getElementById("miniCards" + id);
+		idCard.appendChild(newCard);
 	}	
 	
 }
@@ -228,8 +229,7 @@ class deck{
 		
 		for(var i=0; i<this.cards.length;i++){
 			console.log(this.cards[i]);
-		}
-		
+		}		
 	}
 	
     shuffle(){
@@ -237,25 +237,84 @@ class deck{
         return this.cards[index]; 
     }
     
-    initCards(){
+    drawCard(c){
+		var theCard = this.shuffle();	
+		round.cardsOnTable.push(theCard);
+			
+		document.getElementById(c + "Price").innerHTML = theCard.price + " ⚡";
+		document.getElementById(c + "Name").innerHTML = theCard.name;
+		document.getElementById(c + "Action").innerHTML = theCard.action;
+		document.getElementById(c + "Description").innerHTML = theCard.description;	
+		document.getElementById(c + "Index").innerHTML = theCard.id;		
+	}
+	
+	emptyCard(c){
+		document.getElementById(c + "Price").innerHTML = "";
+		document.getElementById(c + "Name").innerHTML = "";
+		document.getElementById(c + "Action").innerHTML = "";
+		document.getElementById(c + "Description").innerHTML = "";	
+		document.getElementById(c + "Index").innerHTML = "";		
+	}
+	
+	isEmpty(c){
+		var price = document.getElementById(c + "Price").innerHTML;
+		var name = document.getElementById(c + "Name").innerHTML;
+		var action = document.getElementById(c + "Action").innerHTML;;
+		var description = document.getElementById(c + "Description").innerHTML;	
+		var index = document.getElementById(c + "Index").innerHTML;
+		
+		if(price == "" && name == "" && action == "" && description == "" && index == ""){
+			return true;
+		}
+		
+		else{
+			return false;
+		}
+	}
+    
+    initCards(){	
 		var i;		
-		for(i=1; i<4; i++){
-			var theCard = this.shuffle();	
-			round.cardsOnTable.push(theCard);
-				
-			document.getElementById("c" + i + "Price").innerHTML = theCard.price + " ⚡";
-			document.getElementById("c" + i + "Name").innerHTML = theCard.name;
-			document.getElementById("c" + i + "Action").innerHTML = theCard.action;
-			document.getElementById("c" + i + "Description").innerHTML = theCard.description;	
-			document.getElementById("c" + i + "Index").innerHTML = theCard.id;					
+		for(i=1; i<4; i++){			
+			if(this.isEmpty("c" + i)){
+				this.drawCard("c" + i);
+			}							
+		}
+	}
+      
+   testMoney(c){
+	   var index = document.getElementById(c+ "Index").innerHTML;
+	   
+		if(round.player.money >= this.cards[index].price){
+			this.buyCard(index,c);
+		}
+		else{
+			alert("Not enough money");
 		}
 	}
    
-	pickCard(c){		
-		var index = document.getElementById(c+ "Index").innerHTML;
-		this.cards[index].pickCard();		
-	}
-    
+	buyCard(index,c){
+		if(confirm("Do you want to buy this card?")){
+			this.cards[index].pickCard(round.player.id);
+			
+			/*Atualiza o valor do dinheiro do jogador*/
+			round.player.money-=this.cards[index].price;
+			document.getElementById(round.player.id+"Money").innerHTML = "⚡ " + round.player.money;		
+			
+			/*coloca a carta no array de cartas do jogador*/
+			round.player.playerCards.push(this.cards[index]);
+			
+			/*remove a carta da mesa*/
+			round.cardsOnTable.splice(round.cardsOnTable.indexOf(this.cards[index]),1);
+			this.emptyCard(c);
+			
+			/*remove a carta do baralho TIRAR A CARTA DO BARALHO QUANDO POR ELA NA MESA*/
+			this.cards.splice(index,1);
+			
+			/*saca nova carta*/
+			this.initCards();			
+			
+		}
+	}    
 }
 
 /*******************************************************/
@@ -263,7 +322,7 @@ class deck{
 class gameRound{
 	constructor(){
 		this.playersArray = new Array();
-		this.playersArray.push(new player("Meka Dragon", "mekaDragon", 10, 0, 0, 0));
+		this.playersArray.push(new player("Meka Dragon", "mekaDragon", 10, 3, 6, 0));
 		this.playersArray.push(new player("Cyber Bunny", "cyberBunny", 10, 0, 0, 0));
 		this.playersArray.push(new player("The King", "theKing", 10, 0, 0, 0));		
 		this.playersArray.push(new player("Giga Zaur", "gigaZaur", 10, 0, 0, 0));
